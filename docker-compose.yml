@@ -1,0 +1,22 @@
+version: '3.7'
+services:
+        arangodb_db_container:
+                image: arangodb:latest
+                container_name: arangodb
+                environment:
+                        ARANGO_ROOT_PASSWORD: rootpassword
+                ports:
+                        - 80:8529
+                volumes:
+                        - arangodb_data_container:/var/lib/arangodb3
+                        - arangodb_apps_data_container:/var/lib/arangodb3-apps
+        arangocliente:
+                image: mikelp0207/arangodb_prueba:arangocliente01
+                restart: on-failure
+                depends_on:
+                        - "arangodb_db_container"
+                container_name: arangocliente
+
+volumes:
+        arangodb_data_container:
+        arangodb_apps_data_container:
